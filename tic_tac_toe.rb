@@ -57,8 +57,8 @@ class TicTacToe
     row_win?(@grid.transpose, sym)
   end
 
-  def grid_full?(board)
-    board.each.none? { |value| value == nil }
+  def grid_full?
+    @grid.flatten.none?(&:nil?)
   end
 end
 
