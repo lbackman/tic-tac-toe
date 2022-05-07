@@ -7,7 +7,7 @@ class TicTacToe
   end
 
   def place_symbol
-    pos = symbol_position
+    pos = choose_position
     x, y = pos.first, pos.last
     @grid[x - 1][y - 1] = @symbol unless @grid[x - 1][y - 1]
     p @grid
@@ -30,7 +30,7 @@ class TicTacToe
     end
   end
 
-  def symbol_position
+  def choose_position
     puts "#{@symbol}, select row (1 - 3)"
     row_position = gets.to_i
     puts "#{@symbol}, select column (1 - 3)"
