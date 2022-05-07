@@ -6,14 +6,6 @@ class TicTacToe
     @symbol = 'X'
   end
 
-  def change_symbol
-    if @symbol == 'X'
-      @symbol = 'O'
-    else
-      @symbol = 'X'
-    end
-  end
-
   def place_symbol
     pos = symbol_position
     x, y = pos.first, pos.last
@@ -28,10 +20,20 @@ class TicTacToe
     end
   end
 
+  private
+
+  def change_symbol
+    if @symbol == 'X'
+      @symbol = 'O'
+    else
+      @symbol = 'X'
+    end
+  end
+
   def symbol_position
-    puts 'Select row (1 - 3)'
+    puts "#{@symbol}, select row (1 - 3)"
     row_position = gets.to_i
-    puts 'Select column (1 - 3)'
+    puts "#{@symbol}, select column (1 - 3)"
     column_position = gets.to_i
     [row_position, column_position]
   end
