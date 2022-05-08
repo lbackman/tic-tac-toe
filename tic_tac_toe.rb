@@ -6,21 +6,32 @@ class TicTacToe
     @symbol = 'X'
   end
 
-  def place_symbol
-    pos = choose_position
-    x, y = pos.first, pos.last
-    @grid[x - 1][y - 1] = @symbol unless @grid[x - 1][y - 1]
-    p @grid
+  def play
+    place_symbol
     if win?(@grid, @symbol)
       p "#{@symbol} wins!"
       p @grid
+    elsif grid_full?
+      p 'Draw!'
     else
       self.change_symbol
-      place_symbol
+      play
     end
   end
 
   private
+
+  def place_symbol
+    pos = choose_position
+    x, y = pos.first, pos.last
+    if @grid[x - 1][y - 1]
+      p "That position is already played, please choose again."
+      place_symbol
+    else 
+      @grid[x - 1][y - 1] = @symbol
+      p @grid
+    end
+  end
 
   def change_symbol
     if @symbol == 'X'
@@ -62,7 +73,26 @@ class TicTacToe
   end
 end
 
-puts 'Type "play" to begin a game'
-input = gets.chomp
-game = TicTacToe.new if input.downcase == 'play'
-game.place_symbol
+class Player
+  attr_reader :sym
+
+  def initialize(name, sym)
+    @name = name
+    @sym = sym
+  end
+end
+
+
+def start_game
+  puts 'Type "play" to begin a game'
+  input = gets.chomp
+  if input.downcase == 'play'
+    game = TicTacToe.new
+    game.play
+    start_game
+  else
+    puts "Exit"
+  end
+end
+
+start_game
