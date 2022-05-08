@@ -10,7 +10,7 @@ class TicTacToe
     place_symbol
     if win?(@grid, @symbol)
       p "#{@symbol} wins!"
-      p @grid
+      print_grid
     elsif grid_full?
       p 'Draw!'
     else
@@ -29,7 +29,7 @@ class TicTacToe
       place_symbol
     else 
       @grid[x - 1][y - 1] = @symbol
-      p @grid
+      print_grid
     end
   end
 
@@ -66,6 +66,12 @@ class TicTacToe
     row_win?(@grid, sym) ||
     # Checks columns
     row_win?(@grid.transpose, sym)
+  end
+
+  def print_grid
+    a = @grid.flatten.map { |e| e ? e : ' '}
+    puts "#{a[0]}|#{a[1]}|#{a[2]}\n#{a[3]}|#{a[4]}|#{a[5]}\n"\
+         "#{a[6]}|#{a[7]}|#{a[8]}"
   end
 
   def grid_full?
