@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 class TicTacToe
-  def initialize
+  attr_accessor :symbol, :temp_symbol, :player1, :player2
+
+  def initialize(player1, player2)
+    @player1 = player1
+    @player2 = player2
+    @symbol = @player1.symbol
+    @temp_symbol = @player2.symbol
     @grid = Array.new(3) { Array.new(3) }
-    @symbol = 'X'
   end
 
   def play
@@ -34,10 +39,10 @@ class TicTacToe
   end
 
   def change_symbol
-    if @symbol == 'X'
-      @symbol = 'O'
+    if @symbol == @player1.symbol
+      @symbol, @temp_symbol = @player2.symbol, @player1.symbol
     else
-      @symbol = 'X'
+      @symbol, @temp_symbol = @player1.symbol, @player2.symbol
     end
   end
 
@@ -52,6 +57,7 @@ class TicTacToe
   def diagonal_win?(board, sym)
     board.each_index.all? do |i| 
       sym == board[i][i] || sym == board[i][2-i]
+      puts "diagonal"
     end
   end
 
@@ -79,11 +85,21 @@ class TicTacToe
   end
 end
 
+class Player
+  attr_reader :symbol
+
+  def initialize(symbol)
+    @symbol = symbol
+  end
+end
+
 def start_game
   puts 'Type "play" to begin a game'
-  input = gets.chomp
-  if input.downcase == 'play'
-    game = TicTacToe.new
+  input = gets.chomp.downcase
+  if input == 'play'
+    p1 = Player.new('X')
+    p2 = Player.new('O')
+    game = TicTacToe.new(p1, p2)
     game.play
     start_game
   else
