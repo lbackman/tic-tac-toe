@@ -70,24 +70,14 @@ class TicTacToe
 
   def print_grid
     a = @grid.flatten.map { |e| e ? e : ' '}
-    puts "#{a[0]}|#{a[1]}|#{a[2]}\n#{a[3]}|#{a[4]}|#{a[5]}\n"\
-         "#{a[6]}|#{a[7]}|#{a[8]}"
+    puts " \n#{a[0]}|#{a[1]}|#{a[2]}\n#{a[3]}|#{a[4]}|#{a[5]}\n"\
+         "#{a[6]}|#{a[7]}|#{a[8]}\n "
   end
 
   def grid_full?
     @grid.flatten.none?(&:nil?)
   end
 end
-
-class Player
-  attr_reader :sym
-
-  def initialize(name, sym)
-    @name = name
-    @sym = sym
-  end
-end
-
 
 def start_game
   puts 'Type "play" to begin a game'
