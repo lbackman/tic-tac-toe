@@ -55,10 +55,8 @@ class TicTacToe
   end
 
   def diagonal_win?(board, sym)
-    board.each_index.all? do |i| 
-      sym == board[i][i] || sym == board[i][2-i]
-      puts "diagonal"
-    end
+    board.each_index.all? { |i| sym == board[i][i] } ||
+    board.each_index.all? { |i| sym == board[i][2-i] }
   end
 
   def row_win?(board, sym)
