@@ -13,9 +13,8 @@ class TicTacToe
 
   def play
     place_symbol
-    if win?(@grid, @symbol)
+    if win?(@symbol)
       p "#{@symbol} wins!"
-      print_grid
     elsif grid_full?
       p 'Draw!'
     else
@@ -32,7 +31,7 @@ class TicTacToe
     if @grid[x - 1][y - 1]
       p "That position is already played, please choose again."
       place_symbol
-    else 
+    else
       @grid[x - 1][y - 1] = @symbol
       print_grid
     end
@@ -56,7 +55,7 @@ class TicTacToe
 
   def diagonal_win?(board, sym)
     board.each_index.all? { |i| sym == board[i][i] } ||
-    board.each_index.all? { |i| sym == board[i][2-i] }
+    board.each_index.all? { |i| sym == board[i][2 - i] }
   end
 
   def row_win?(board, sym)
@@ -65,7 +64,7 @@ class TicTacToe
     end
   end
 
-  def win?(board, sym)
+  def win?(sym)
     diagonal_win?(@grid, sym) ||
     row_win?(@grid, sym) ||
     # Checks columns
@@ -73,7 +72,7 @@ class TicTacToe
   end
 
   def print_grid
-    a = @grid.flatten.map { |e| e ? e : ' '}
+    a = @grid.flatten.map { |e| e || ' ' }
     puts " \n#{a[0]}|#{a[1]}|#{a[2]}\n#{a[3]}|#{a[4]}|#{a[5]}\n"\
          "#{a[6]}|#{a[7]}|#{a[8]}\n "
   end
