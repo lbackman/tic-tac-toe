@@ -89,4 +89,36 @@ describe TicTacToe do
       end
     end
   end
+
+  describe '#grid_full?' do
+    subject(:full_game) { described_class.new(player1, player2) }
+
+    context 'when the grid is full' do
+
+      before {full_game.instance_variable_set(
+        :@grid, 
+        [%w[X O X],
+         %w[X O O],
+         %w[O X X]]) }
+
+      it 'grid_full? should return true' do
+        result = full_game.grid_full?
+        expect(result).to eq(true)
+      end
+    end
+
+    context 'when the grid is not full' do
+
+      before {full_game.instance_variable_set(
+        :@grid, 
+        [['X',nil,'X'],
+         [nil,'O','O'],
+         [nil,'O','X']]) }
+
+      it 'grid_full? should return false' do
+        result = full_game.grid_full?
+        expect(result).to eq(false)
+      end
+    end
+  end
 end
