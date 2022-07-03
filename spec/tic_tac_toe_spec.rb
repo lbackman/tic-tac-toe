@@ -48,4 +48,45 @@ describe TicTacToe do
       end
     end
   end
+
+  describe '#row_win?' do
+    subject(:row_game) { described_class.new(player1, player2) }
+
+    context 'when the top row is filled with X' do
+      let(:board) { [['X','X','X'],
+                     ['O','O',nil],
+                     ['O',nil,'X']] }
+
+      it 'row_win? should return true' do
+        sym = player1.symbol
+        result = row_game.row_win?(board, sym)
+        expect(result).to eq(true)
+      end
+    end
+
+    context 'when no row (or column) is filled' do
+      let(:board) { [['X','O','X'],
+                     ['O','O',nil],
+                     ['O',nil,'X']] }
+
+      it 'row_win? should return false' do
+        sym = player1.symbol
+        result = row_game.row_win?(board, sym)
+        expect(result).to eq(false)
+      end
+    end
+
+    context 'when a column is filled' do
+      let(:board) { [['X','O','X'],
+                     ['X','O',nil],
+                     ['X',nil,'O']] }
+
+      it 'row_win? should return true when board is transposed' do
+        sym = player1.symbol
+        board_transpose = board.transpose
+        result = row_game.row_win?(board_transpose, sym)
+        expect(result).to eq(true)
+      end
+    end
+  end
 end
