@@ -23,8 +23,6 @@ class TicTacToe
     end
   end
 
-  private
-
   def place_symbol
     pos = choose_position
     x, y = pos.first, pos.last
