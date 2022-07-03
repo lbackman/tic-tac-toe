@@ -121,4 +121,26 @@ describe TicTacToe do
       end
     end
   end
+
+  describe '#choose_position' do
+    subject(:choose_game) { described_class.new(player1, player2) }
+
+    context 'when user chooses 1 and 1' do
+
+      it 'asks for two inputs' do
+        expect(choose_game).to receive(:puts).twice
+        choose_game.choose_position
+      end
+
+      before do
+        valid = 1
+        allow(choose_game).to receive(:gets).and_return(valid).twice
+      end
+
+      it 'returns [1, 1]' do
+        result = choose_game.choose_position
+        expect(result).to eq([1, 1])
+      end
+    end
+  end
 end
