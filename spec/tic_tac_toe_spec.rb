@@ -126,6 +126,9 @@ describe TicTacToe do
     subject(:choose_game) { described_class.new(player1, player2) }
 
     context 'when user chooses 1 and 1' do
+      before do
+        allow(choose_game).to receive(:puts).twice
+      end
 
       it 'asks for two inputs' do
         expect(choose_game).to receive(:puts).twice
@@ -140,6 +143,46 @@ describe TicTacToe do
       it 'returns [1, 1]' do
         result = choose_game.choose_position
         expect(result).to eq([1, 1])
+      end
+    end
+  end
+
+  describe '#place_symbol' do
+    subject(:place_game) { described_class.new(player1, player2) }
+
+    before {place_game.instance_variable_set(
+      :@grid, 
+      [['X',nil,'X'],
+       [nil,'O','O'],
+       [nil,'O','X']]) }
+    
+    context 'when the chosen position is empty' do
+      before do
+        allow(place_game).to receive(:choose_position).and_return([1, 2])
+        allow(place_game).to receive(:print_grid).once
+      end
+
+      it 'the chosen board position updates its value' do
+        place_game.place_symbol
+        square = place_game.instance_variable_get(:@grid)
+        expect(square[0][1]).not_to be_nil
+      end
+
+      it 'print_grid is called' do
+        expect(place_game).to receive(:print_grid).once
+        place_game.place_symbol
+      end
+    end
+
+    context 'when the chosen position is already taken' do
+      before do
+        allow(place_game).to receive(:choose_position).and_return([1, 1], [1, 1], [2, 1])
+        allow(place_game).to receive(:puts).exactly(3).times
+      end
+
+      it 'puts is called twice if taken position is given' do
+        expect(place_game).to receive(:puts).with("That position is already played, please choose again.").twice
+        place_game.place_symbol
       end
     end
   end
