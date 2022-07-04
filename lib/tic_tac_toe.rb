@@ -18,20 +18,22 @@ class TicTacToe
     elsif grid_full?
       p 'Draw!'
     else
-      self.change_symbol
+      change_symbol
       play
     end
   end
 
   def place_symbol
-    pos = choose_position
-    x, y = pos.first, pos.last
-    if @grid[x - 1][y - 1]
-      p "That position is already played, please choose again."
-      place_symbol
-    else
-      @grid[x - 1][y - 1] = @symbol
-      print_grid
+    loop do
+      pos = choose_position
+      x, y = pos.first, pos.last
+      if @grid[x - 1][y - 1]
+        puts "That position is already played, please choose again."
+      else
+        @grid[x - 1][y - 1] = @symbol
+        print_grid
+        break
+      end
     end
   end
 
